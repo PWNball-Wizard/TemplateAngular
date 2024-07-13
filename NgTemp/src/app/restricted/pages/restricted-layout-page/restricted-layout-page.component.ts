@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class RestrictedLayoutPageComponent {
 
+  public sideNavItems = [
+    {url: '/restricted/dashboard', label: 'Dashboard', icon: 'dashboard'},
+    {url: '/restricted/contacts', label: 'Contacts', icon: 'contacts'},
+    {url: '/restricted/leads', label: 'Leads', icon: 'leads'},
+  ];
+
 }

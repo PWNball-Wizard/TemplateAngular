@@ -9,12 +9,12 @@ const routes: Routes = [
     component: RestrictedLayoutPageComponent,
     children: [
       {
-        path: 'hello',
+        path: 'inicio',
         component: RestrictedPageComponent,
       },
       {
         path: '**',
-        redirectTo: 'hello',
+        redirectTo: 'inicio',
       },
     ],
   },

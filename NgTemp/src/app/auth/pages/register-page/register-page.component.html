@@ -1,0 +1,57 @@
+<div class="page-container">
+    <div class="login-container">
+      <h1 class="logo">Digital</h1>
+      
+      <h2 class="title">Artificial Intelligence Driving Results For The Travel Industry</h2>
+      
+      <p class="welcome-text">Welcome back! Please login to your account.</p>
+      
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="email-section">
+         <!--  <label>Email section</label> -->
+          <input formControlName="email" type="email" placeholder="Email Address">
+          <input formControlName="password" type="password" placeholder="Password">
+          <input formControlName="confirmPassword" type="password" placeholder="Confirm Password">
+        </div>
+
+        //TODO Hacer un register que en lugar de registrar con el correo y contrase;a, solo 
+        //TODO registre con el correo y le mande un correo al usuario con una contrase;a temporal
+        //TODO y que al darle click en el link del correo, lo redirija a la pagina de login para que
+        //TODO el usuario pueda cambiar su contrase;a
+        
+        <!-- <div class="form-actions">
+          <label>
+            <input type="checkbox" formControlName="rememberMe">
+            Remember Me
+          </label>
+          <a [routerLink]="['/auth/register']" class="forgot-password">Forgot Password?</a>
+        </div> -->
+        
+        <div class="button-group">
+          <!-- <button [routerLink]="['/auth/login']" type="button" class="login-btn">Login</button> -->
+          <button type="submit" class="login-btn">Sign Up</button>
+        </div>
+        <a [routerLink]="['/auth/login']" class="forgot-password">Already have an account?</a>
+      </form>
+      
+      <!-- <div class="social-login">
+        <p>Or login with</p>
+        <div class="social-buttons">
+          <a href="#" class="facebook">Facebook</a>
+          <a href="#" class="linkedin">LinkedIn</a>
+          <a href="#" class="google">Google</a>
+        </div>
+      </div> -->
+    </div>
+    
+    <!-- <nav class="top-nav">
+      <a href="#" class="active">Home</a>
+      <a href="#">About us</a>
+      <a href="#">Blog</a>
+      <a href="#">Pricing</a>
+    </nav> -->
+    
+    <div class="illustration">
+      
+    </div>
+  </div>
