@@ -7,20 +7,38 @@
     </h2>
 
     <p class="welcome-text">Welcome back! Please login to your account.</p>
-
+    <!-- !Declaramos el formGroup en el formulario -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="email-section">
         <!--  <label>Email section</label> -->
+        <!--! En cada input declaramos el formControlName -->
         <input
           formControlName="email"
           type="email"
           placeholder="Email Address"
         />
+        <!-- !Usamos un span con un ngIf que evalua lo que retorna la funcion isValidField, si retorna un true, se muestra el mensaje
+        !Para esto llamamos a la funcion isValidField, la cual ocupa de un formGrooup y un campo como string
+        !en este caso es para evaluar el campo email
+        -->
+        <span
+          *ngIf="isValidField(loginForm, 'email')"
+          class="form-text text-danger"
+        >
+        <!-- !Usamos la funcion getFieldError que es la que nos retorna que error es el que se presento -->
+          {{ getFieldError(loginForm, "email") }}
+        </span>
         <input
           formControlName="password"
           type="password"
           placeholder="Password"
         />
+        <span
+          *ngIf="isValidField(loginForm, 'password')"
+          class="form-text text-danger"
+        >
+          {{ getFieldError(loginForm, "password") }}
+        </span>
       </div>
 
       <div class="form-actions">
@@ -63,5 +81,5 @@
 </div>
 
 <div>
-  {{respuesta| json}}
+  {{ respuesta | json }}
 </div>
