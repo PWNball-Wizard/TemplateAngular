@@ -76,8 +76,10 @@ export class ValidatorsService implements AsyncValidator {
 
       if (pasw1 !== pasw2) {
         formGroup.controls[passcheck].setErrors({ noIguales: true });
+        //formGroup.controls[password].setErrors({ noIguales: true });
       } else {
         formGroup.controls[passcheck].setErrors(null);
+        //formGroup.controls[password].setErrors(null);
       }
     };
   }

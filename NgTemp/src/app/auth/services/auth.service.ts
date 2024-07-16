@@ -6,7 +6,7 @@ import {
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { Usuarios } from '../interfaces/usuarios.interface';
-import { Login, LoginError, LoginFields } from '../interfaces/login.interface';
+import { Login, LoginError, LoginFields, RegisterFields } from '../interfaces/login.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +42,22 @@ export class AuthService {
   login(body: LoginFields): Observable<Login> {
     //!Se hace la peticion post a la API con el objeto body que contiene los campos email y password
     return this.http.post<Login>(`${this.baseUrl}/auth/login`, body).pipe(
+      //!Capturamos el error con pipe y catchError, podemos colocar el tipo para que se pueda acceder a sus propiedades
+      catchError((err: Login) => {
+        //console.log('Error servicio',err);
+        //!retornamos un throwError con el error que viene de la API en el campo error
+        //!Retornamos solamente err.error ya que es el arreglo que contiene el error el cual viene de la API
+        //!Podemos agregar el tipo aunque no es necesario
+        //! return throwError(err.error as Login);
+        return throwError(err.error as Login);
+        //return of(err);
+      })
+    );
+  }
+
+  register(body: RegisterFields): Observable<Login> {
+    //!Se hace la peticion post a la API con el objeto body que contiene los campos email y password
+    return this.http.post<Login>(`${this.baseUrl}/usuarios`, body).pipe(
       //!Capturamos el error con pipe y catchError, podemos colocar el tipo para que se pueda acceder a sus propiedades
       catchError((err: Login) => {
         //console.log('Error servicio',err);
