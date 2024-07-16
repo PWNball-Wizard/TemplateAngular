@@ -89,12 +89,15 @@ export class LoginPageComponent {
         //!Asignamos la respuesta a la propiedad respuesta que tambien es de tipo Login
         this.respuesta = respuesta;
         //!Mostramos un snackbar de Material con el mensaje de que el login fue correcto
-        this.snackbar.open('Correcto', 'Cerrar', {
+        this.snackbar.open('Bienvenido', 'Cerrar', {
           duration: 3000,
         });
         //!Guardamos el token en el localStorage con localStorage.setItem este metodo recibe dos parametros, el nombre o key y el valor
         //!le ponemos como nombre o key 'token', usamos JSON.stringify para convertir el objeto a string y guardarlo en el localStorage
-        localStorage.setItem('token', JSON.stringify(respuesta.respuesta?.token));
+        localStorage.setItem(
+          'token',
+          JSON.stringify(respuesta.respuesta?.token)
+        );
         //!Redirigimos al usuario a la ruta /restricted/inicio con el metodo navigateByUrl de Router
         this.router.navigateByUrl('/restricted/inicio');
       },

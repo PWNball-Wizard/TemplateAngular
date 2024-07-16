@@ -14,7 +14,7 @@ export class ValidatorsService implements AsyncValidator {
   constructor() {}
 
   //!Patrones para validar campos, son expresiones regulares, las declaramos como publicas para que se puedan acceder desde cualquier parte del proyecto
-  public firstNameAndLastnamePattern: string = '([a-zA-Z]+) ([a-zA-Z]+)';
+  public firstNameAndLastnamePattern: string = '([a-zA-Z]+) ([a-zA-Z]+( [a-zA-Z]+)*)';
   public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
   //!Metodo que se utiliza para saber si un campo es valido o no, recibe un formGroup y el nombre del campo

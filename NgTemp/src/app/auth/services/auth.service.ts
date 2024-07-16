@@ -56,7 +56,7 @@ export class AuthService {
   }
 
   register(body: RegisterFields): Observable<Login> {
-    //!Se hace la peticion post a la API con el objeto body que contiene los campos email y password
+    //!Se hace la peticion post a la API con el objeto body que contiene los campos name, email y password
     return this.http.post<Login>(`${this.baseUrl}/usuarios`, body).pipe(
       //!Capturamos el error con pipe y catchError, podemos colocar el tipo para que se pueda acceder a sus propiedades
       catchError((err: Login) => {

@@ -18,6 +18,7 @@ export class RegisterPageComponent {
         '',
         [
           Validators.required,
+          //!Validacion para que el nombre sea del tipo Nombre Apellido. Ejemplo: Juan Perez,  Juan Perez Perez
           Validators.pattern(
             this.validationService.firstNameAndLastnamePattern
           ),
@@ -34,7 +35,13 @@ export class RegisterPageComponent {
       confirmPassword: ['', [Validators.required]],
     },
     {
+      //!Validacion para verificar que las contraseñas sean iguales en los campos password y confirmPassword
+      //!Al poner las validaciones aqui abajo, se ejecutan despues de las validaciones de los campos individuales
+      //!Tambien el formGroup se pasa como argumento a la funcion isPasswordOneEqualToPasswordTwo con todos los campos que lo integran
+      //!Entonces desde la funcion se puede acceder a todos los campos del formGroup para trabajar con ellos
       validators: [
+        //!Mandamos a llamar a la funcion isPasswordOneEqualToPasswordTwo del servicio ValidatorsService, este ocupa dos argumentos
+        //!los cuales son los nombres de los campos que queremos comparar en el formGroup
         this.validationService.isPasswordOneEqualToPasswordTwo(
           'password',
           'confirmPassword'
@@ -69,8 +76,8 @@ export class RegisterPageComponent {
         this.router.navigateByUrl('/restricted/inicio'); */
       },
       (error: Login) => {
-        console.log(error)
-        this.snackbar.open('error.error.msg', 'Cerrar', {
+        //console.log(error)
+        this.snackbar.open(error.error.msg, 'Cerrar', {
           duration: 3000,
         });
       }
