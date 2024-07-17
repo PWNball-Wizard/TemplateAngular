@@ -3,11 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Usuarios } from '../../interfaces/usuarios.interface';
-import {
-  LoginError,
-  Login,
-  LoginFields,
-} from '../../interfaces/login.interface';
+import { Login, LoginFields } from '../../interfaces/login.interface';
 import { ValidatorsService } from 'src/app/shared/services/validators/validators.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -17,6 +13,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./login-page.component.css'],
 })
 export class LoginPageComponent {
+  //private usuarios?: Usuarios;
+  public respuesta?: Login;
+
   //!Para usar los formularios reactivos, se debe importar el módulo ReactiveFormsModule en el módulo que se esté utilizando
   //!Utiliza el formBuilder para crear un formulario reactivo con los campos email, password y rememberMe
   public loginForm = this.formBuilder.group({
@@ -38,9 +37,6 @@ export class LoginPageComponent {
     rememberMe: [false, []],
   });
 
-  private usuarios?: Usuarios;
-  public respuesta?: Login;
-
   onSubmit() {
     //console.log(this.loginForm.get('email')?.value)
     //!Evaluamos si el formulario es invalido de acuerdo a los validadores que le asignamos
@@ -50,9 +46,7 @@ export class LoginPageComponent {
       //!Si el formulario es invalido no retornamos nada, hacemos esto para que no se ejecute nada mas si el formulario tiene informacion no valida
       return;
     }
-
     //console.log(this.loginForm.value);
-
     //!Creamos un objeto de tipo loginFields, el cual usamos para el login del usuario
     const resp: LoginFields = {
       //!Tomamos los valores del formulario accediendo a value.email, el cual es el nombre que le dimos al campo en el formGroup
@@ -65,7 +59,7 @@ export class LoginPageComponent {
     //console.log(resp)
 
     /* this.authService.getUsuarios().subscribe((usuarios) => {
-      //console.log(usuarios);
+      console.log(usuarios);
     }); */
 
     //!Llama a el metodo login del servicio, el cual recibe un objeto de tipo LoginFields el cual contiene los campos email y password
@@ -86,34 +80,32 @@ export class LoginPageComponent {
       */
       (respuesta) => {
         //console.log(respuesta.respuesta.token)
+        //console.log('respuesta', respuesta);
         //!Asignamos la respuesta a la propiedad respuesta que tambien es de tipo Login
         this.respuesta = respuesta;
         //!Mostramos un snackbar de Material con el mensaje de que el login fue correcto
-        this.snackbar.open('Bienvenido', 'Cerrar', {
+        this.snackbar.open(respuesta.respuesta.msg, 'Cerrar', {
           duration: 3000,
         });
         //!Guardamos el token en el localStorage con localStorage.setItem este metodo recibe dos parametros, el nombre o key y el valor
         //!le ponemos como nombre o key 'token', usamos JSON.stringify para convertir el objeto a string y guardarlo en el localStorage
         localStorage.setItem(
           'token',
-          JSON.stringify(respuesta.respuesta?.token)
+          JSON.stringify(respuesta.respuesta.token)
         );
         //!Redirigimos al usuario a la ruta /restricted/inicio con el metodo navigateByUrl de Router
         this.router.navigateByUrl('/restricted/inicio');
       },
       //!Se captura el error de tipo Login, se le agrega el tipo para que se pueda acceder a sus propiedades
       (error: Login) => {
-        //console.log('Error component',error);
+        /* console.log('Error component', error);
+        console.log(error.error.msg) */
         //!Mostramos un snackbar de Material con el mensaje de error que viene de la API en el campo msg
         this.snackbar.open(error.error.msg, 'Cerrar', {
           duration: 3000,
         });
       }
     );
-
-    //!Marca todos los campos como tocados, para que se muestren los mensajes de error
-    //this.loginForm.markAllAsTouched();
-    //this.router.navigateByUrl('/restricted/inicio');
   }
 
   //!Metodo que se utiliza para saber si un campo es valido o no, recibe un formGroup y el nombre del campo

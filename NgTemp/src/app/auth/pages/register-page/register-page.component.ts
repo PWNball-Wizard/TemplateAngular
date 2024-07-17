@@ -68,7 +68,7 @@ export class RegisterPageComponent {
     this.authService.register(resp).subscribe(
       (respuesta) => {
         this.respuesta = respuesta;
-        this.snackbar.open('Usuario creado correctamente', 'Cerrar', {
+        this.snackbar.open(respuesta.respuesta.msg, 'Cerrar', {
           duration: 3000,
         });
         //TODO DESCOMENTAR Y HACER LA LOGICA DE INICIO DE SESION CUANDO UN USUARIO SEA REGISTRADO

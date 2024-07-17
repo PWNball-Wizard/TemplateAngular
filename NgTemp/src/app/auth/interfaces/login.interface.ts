@@ -1,13 +1,13 @@
 //!Interfaz de la respuesta que nos retorna la API cuando hacemos login o registro
 export interface Login {
   ok: boolean;
-  msg: string;
-  respuesta: Respuesta | null;
+  respuesta: Respuesta;
   error: LoginError;
 }
 
 //!Interfaz de la respuesta que nos retorna la API cuando hacemos login o registro satisfactoriamente
 export interface Respuesta {
+  msg: string;
   email: string;
   token: string;
 }
