@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
@@ -25,14 +26,16 @@ export class AuthGuardGuard implements CanActivate {
       //!transformamos el observable que devuelve validateToken a un observable de tipo boolean
       map((respuesta) => {
         //!Si la respuesta no es un error, retornamos retornamos true, en este caso no usamos el of ya que map ya retorna un observable
-        console.log(respuesta);
+
         return true;
+        //TODO Crear una forma de insertar en la base de datos una clave cada que el usuario inicia sesion, esta clave nos servira para comparar
       }),
       //!catchError es un operador de rxjs que se utiliza para capturar errores en un observable y manejarlos
-      catchError((error) => {
+      catchError((error: Login) => {
         //!Si hay un error, lo mostramos en la consola y retornamos false
         //!En este caso usamos of para retornar un observable de tipo boolean ya que catchError no retorna un observable como map
-        console.log(error);
+        //console.log(error);
+        this.router.navigateByUrl('/auth/login');
         return of(false);
       })
     );
@@ -44,5 +47,5 @@ export class AuthGuardGuard implements CanActivate {
                                                   !reemplaza el producto defectuoso con uno nuevo y adecuado (en este caso, emitiendo false).
    */
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 }

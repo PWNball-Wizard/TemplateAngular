@@ -72,8 +72,11 @@ export class RegisterPageComponent {
           duration: 3000,
         });
         //TODO DESCOMENTAR Y HACER LA LOGICA DE INICIO DE SESION CUANDO UN USUARIO SEA REGISTRADO
-        /* localStorage.setItem('token', JSON.stringify(respuesta.respuesta?.token));
-        this.router.navigateByUrl('/restricted/inicio'); */
+        localStorage.setItem(
+          'token',
+          JSON.stringify(respuesta.respuesta?.token)
+        );
+        this.router.navigateByUrl('/restricted/inicio');
       },
       (error: Login) => {
         //console.log(error)
