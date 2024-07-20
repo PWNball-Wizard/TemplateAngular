@@ -4,8 +4,8 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, throwError } from 'rxjs';
-import { Usuarios } from '../interfaces/usuarios.interface';
+import { catchError, Observable, of, tap, throwError } from 'rxjs';
+/* import { Usuarios } from '../interfaces/usuarios.interface'; */
 import {
   Login,
   LoginError,
@@ -13,6 +13,7 @@ import {
   RegisterFields,
   Respuesta,
 } from '../interfaces/login.interface';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,8 @@ export class AuthService {
   });
 
   private baseUrl: string = 'http://localhost:3000/api';
+
+  //public id?: number;
 
   /* getUsuarios(): Observable<Usuarios> {
     return this.http.get<Usuarios>(`${this.baseUrl}/usuarios`, {
@@ -46,6 +49,9 @@ export class AuthService {
   login(body: LoginFields): Observable<Login> {
     //!Se hace la peticion post a la API con el objeto body que contiene los campos email y password
     return this.http.post<Login>(`${this.baseUrl}/auth/login`, body).pipe(
+      /* tap((resp) => {
+        this.id = resp.respuesta.id;
+      }), */
       //!Capturamos el error con pipe y catchError, debemos colocar el tipo HttpErrorResponse
       catchError((err: HttpErrorResponse) => {
         //console.log('Error servicio login',err);
@@ -63,6 +69,9 @@ export class AuthService {
   register(body: RegisterFields): Observable<Login> {
     //!Se hace la peticion post a la API con el objeto body que contiene los campos name, email y password
     return this.http.post<Login>(`${this.baseUrl}/usuarios`, body).pipe(
+      /* tap((resp) => {
+        this.id = resp.respuesta.id;
+      }), */
       //!Capturamos el error con pipe y catchError, podemos colocar el tipo para que se pueda acceder a sus propiedades
       catchError((err: HttpErrorResponse) => {
         //console.log('Error servicio register',err);
@@ -77,20 +86,14 @@ export class AuthService {
   }
 
   validateToken(): Observable<Login> {
-    //!Buscamos el key token en el localStorage, si no existe le asignamos un string vacio ''
-    let token: string = localStorage.getItem('token') || '';
-    //console.log(token);
-    //!Eliminamos espacios en blanco y comillas adicionales al principio y al final del token con replace
-    token = token.replace(/^"|"$/g, '').trim();
-    //!Creamos los headers, enviamos la propiedad x-token que contiene el token
-    const headers: HttpHeaders = new HttpHeaders({
-      //!encodeURI es una funcion que codifica un URI, en este caso el token que viene del localStorage
-      //!Esto es necesario ya que el token puede contener caracteres especiales que no son validos en una URL y al codificarlo se solucionan estos problemas
-      'x-token': encodeURI(token),
-    });
+    
+    const headers: HttpHeaders = this.sharedService.cleanToken();
 
     //!Retornamos la respuesta del get que es de tipo Login, a este get le pasamos los headers.
     return this.http.get<Login>(`${this.baseUrl}/auth/renew`, { headers }).pipe(
+      /* tap((resp) => {
+        this.id = resp.respuesta.id;
+      }), */
       catchError((err: HttpErrorResponse) => {
         /* console.log('Error de renovando Token', err.error as Login);
         console.log('Error de renovando Token', err); */
@@ -99,5 +102,5 @@ export class AuthService {
     );
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private sharedService: SharedService) {}
 }

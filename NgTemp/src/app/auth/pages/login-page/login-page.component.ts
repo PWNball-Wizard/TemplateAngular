@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Usuarios } from '../../interfaces/usuarios.interface';
+/* import { Usuarios } from '../../interfaces/usuarios.interface'; */
 import { Login, LoginFields } from '../../interfaces/login.interface';
 import { ValidatorsService } from 'src/app/shared/services/validators/validators.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

@@ -1,0 +1,120 @@
+<div class="container">
+  <h1>Configuración de la cuenta</h1>
+  <div class="settings-layout">
+    <mat-sidenav-container class="sidenav-container">
+      <mat-nav-list>
+        <mat-list-item *ngFor="let item of sidenavMenu" (click)="item.action()">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span class="nav-label">{{ item.label }}</span>
+        </mat-list-item>
+        <div *ngIf="usuario?.rol_id === 1">
+          <mat-list-item
+            *ngFor="let item of adminSidenavMenu"
+            (click)="item.action()"
+          >
+            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+            <span class="nav-label">{{ item.label }}</span>
+          </mat-list-item>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav-container>
+    <div class="main-content">
+      <div *ngIf="activeTab === 'account'">
+        <h2>Información de la cuenta</h2>
+        <!-- <span>
+          {{usuario | json}}
+        </span> -->
+        <div class="avatar-section">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png"
+            alt="User avatar"
+            class="avatar"
+          />
+          <button>Cambiar foto</button>
+        </div>
+        <form
+          class="form-container"
+          [formGroup]="userProfileForm"
+          (ngSubmit)="onSubmitUserProfile()"
+        >
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input
+              id="name"
+              type="text"
+              [value]="usuario?.nombre"
+              formControlName="nombre"
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              [value]="usuario?.email"
+              formControlName="email"
+            />
+          </div>
+          <button type="submit">Guardar cambios</button>
+        </form>
+      </div>
+      <div *ngIf="activeTab === 'password'">
+        <h2>Cambiar contraseña</h2>
+        <form
+          class="form-container"
+          [formGroup]="userPasswordForm"
+          (ngSubmit)="onSubmitPassword()"
+        >
+          <div class="form-group">
+            <label for="new-password">Nueva contraseña</label>
+            <input
+              id="new-password"
+              type="password"
+              [value]="usuario?.password"
+              formControlName="password"
+            />
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirmar nueva contraseña</label>
+            <input
+              id="confirm-password"
+              type="password"
+              [value]=""
+              formControlName="confirmPassword"
+            />
+          </div>
+          <button type="submit">Cambiar contraseña</button>
+        </form>
+      </div>
+      <!--! Creamos una opcion del sidenav oculta. Accesible solo a los usuarios que sean administradores -->
+      <div *ngIf="activeTab === 'admin' && usuario?.rol_id === 1">
+        <h2>Administrar usuarios</h2>
+        <!-- <form
+          class="form-container"
+          [formGroup]="userPasswordForm"
+          (ngSubmit)="onSubmitPassword()"
+        >
+          <div class="form-group">
+            <label for="new-password">Nueva contraseña</label>
+            <input
+              id="new-password"
+              type="password"
+              [value]="usuario?.password"
+              formControlName="password"
+            />
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirmar nueva contraseña</label>
+            <input
+              id="confirm-password"
+              type="password"
+              [value]=""
+              formControlName="confirmPassword"
+            />
+          </div>
+          <button type="submit">Cambiar contraseña</button>
+        </form> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -37,9 +37,13 @@
     </button>
 
     <mat-menu #menu="matMenu">
-      <button (click)="menuItem.action()" mat-menu-item *ngFor="let menuItem of matMenuItems">
-        <mat-icon>{{menuItem.icon}}</mat-icon>
-        <span>{{menuItem.label}}</span>
+      <button
+        (click)="menuItem.action()"
+        mat-menu-item
+        *ngFor="let menuItem of matMenuItems"
+      >
+        <mat-icon>{{ menuItem.icon }}</mat-icon>
+        <span>{{ menuItem.label }}</span>
       </button>
       <!-- <button mat-menu-item disabled>
         <mat-icon>voicemail</mat-icon>
@@ -54,9 +58,7 @@
     <!-- <button mat-button (click)="logout()">
       <mat-icon>logout</mat-icon>
       <span>Cerrar sesion</span>
-    </button>  -->
-
-    </mat-toolbar
+    </button>  --> </mat-toolbar
   ><!--!Se define el color de la barra de navegación-->
 
   <div class="container p-2">
